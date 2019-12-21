@@ -1,29 +1,47 @@
 function changeList() {
-    console.log('change made');
+    console.log('change made to grocery list');
     listenHere();
 }  
  
  
 function listenHere() {
-    $('shopping-list-entry').submit(function() {
-        let grocery = $('shopping-item').val();
-        let large = '<li><span class="shopping-item">' + grocery + '</span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>';
-        $('#shopping-list').append(large);  
+    $('#js-shopping-list-form').submit(function(event) {
+        event.preventDefault();
+        let grocery = $('#shopping-list-entry').val();
+        console.log(grocery);
+        let large = `<li>
+        <span class="shopping-item">${grocery}</span>
+        <div class="shopping-item-controls">
+          <button class="shopping-item-toggle">
+            <span class="button-label">check</span>
+          </button>
+          <button class="shopping-item-delete">
+            <span class="button-label">delete</span>
+          </button>
+        </div>
+      </li>`;
+      console.log(large);
+        $('.shopping-list').append(large);
     });
 
-    $("shopping-item-toggle").click(function() {
-        $("span.shoppting-item").toggleClass("shopping-item__checked")
-        $("shopping-item").css("text-decoration", "line-through")
-    });
+    $(".shopping-list").on('click', '.shopping-item-toggle', function(event){
+        event.preventDefault();
+        $(this).closest('.shopping-item-controls').siblings('.shopping-item').toggleClass(" shopping-item__checked");
+    })
 
-    $("shopping-item-delete").click(function() {
-        $("li").remove()
+
+    $(".shopping-list").on('click', '.shopping-item-delete', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        $(this).closest('li').remove();
     });
 }
 
  $(changeList);   
 
-
+//use this keyword
+//use toggleclass
+//looking at child elements
 
 
 
